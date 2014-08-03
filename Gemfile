@@ -19,4 +19,6 @@ gem 'shotgun'
 
 group :development, :test do
   gem 'faker'
+  gem 'thin'  
+
 end
