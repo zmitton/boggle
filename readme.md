@@ -2,7 +2,7 @@ This is a file structure that can be uploaded to Heroku to get a 'hello world' a
 
 1) Clone this repo to your computer using the following command:
 
-https://github.com/zmitton/heroku_thin_server_base.git
+git clone https://github.com/zmitton/heroku_thin_server_base.git
 
 
 2) Create an app on Heroku by creating an account, going to 'apps' and clicking 'create a new app'
