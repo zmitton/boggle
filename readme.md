@@ -2,5 +2,5 @@ This is a small app that traverses a boggle puzzle in every possible way to dete
 
 Checkout the working code here
 
-[boggle.zacmitton.com](http://bogle.zacmitton.com)
+[boggle.zacmitton.com](http://boggle.zacmitton.com)
 
