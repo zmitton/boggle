@@ -1,5 +1,5 @@
 class BoggleBoard
-	attr_accessor :grid, :found_words, :r_index, :c_index
+	attr_accessor :grid, :found_words, :r_index, :c_index, :score
 	def initialize (string = "4")
 		@found_words = []
 		@covered_ground = []
@@ -121,17 +121,19 @@ class BoggleBoard
 		loop_board do |die|
 			@c_index = die.c_index
 			@r_index = die.r_index
+			@score = 0
 			@current_word = die.top
 			@covered_ground = ["#{@r_index}#{@c_index}"]
 			find_words
 		end
-		@found_words.uniq!
+		total_score
+		@found_words.sort!.uniq!
 	end
 
 
 	def find_words #recursive
-		return nil if !is_word_path? || ($end_time && Time.now > $end_time)
-		@found_words << @current_word if is_word? && !@found_words.include?(@current_word)
+		return nil if !binary_is_word_path? || ($end_time && Time.now > $end_time)
+		@found_words << @current_word if binary_is_valid_word? && !@found_words.include?(@current_word)
 		
 		#Traverse in each direction, and recurse
 		n
@@ -144,19 +146,62 @@ class BoggleBoard
 		nw
 	end
 
+	#Uses database of Terms
+	# def is_valid_word?
+	# 	if Term.where(word: "#{@current_word}").length != 0 && @current_word.length > 2
+	# 		puts "WORD: #{@current_word}" 
+	# 		return true
+	# 	end
+	# 	false
+	# end
+	# def is_word_path?
+	# 	Term.where("word LIKE (?)", "#{@current_word}%").length != 0
+	# end
 
-	def is_word?
-		if Term.where(word: "#{@current_word}").length != 0 && @current_word.length > 2
-			puts "WORD: #{@current_word}" 
-			return true
+
+	#database free version
+	def binary_is_valid_word?
+		return false if @current_word.length < 3
+		@current_word.downcase
+		low_i = 0
+		i = $terms.length / 2
+		high_i = $terms.length - 1
+		while low_i <= high_i
+			i = (high_i + low_i)/2
+			if $terms[i].downcase == @current_word
+				# puts "i:#{i},   low_i:#{low_i}, high_i:#{high_i}, #{$terms[i]}"
+				return true
+			elsif @current_word < $terms[i].downcase
+				high_i = i - 1
+			elsif @current_word > $terms[i].downcase
+				low_i = i + 1
+			end
 		end
-		false
+		return false
 	end
 
-	#Are there any words that start with these letters (halt further recursion down fruitless paths).
-	def is_word_path?
-		Term.where("word LIKE (?)", "#{@current_word}%").length != 0
+	def binary_is_word_path?
+		@current_word.downcase
+		low_i = 0
+		i = $terms.length / 2
+		high_i = $terms.length - 1
+		while low_i <= high_i
+			i = (high_i + low_i)/2
+			if $terms[i][0..@current_word.length - 1].downcase == @current_word
+				# puts "i:#{i},   low_i:#{low_i}, high_i:#{high_i}, #{$terms[i][0..@current_word.length - 1]}"
+				return true
+			elsif @current_word < $terms[i].downcase
+				high_i = i - 1
+			elsif @current_word > $terms[i].downcase
+				low_i = i + 1
+			end
+		end
+		# puts "i:#{i},   low_i:#{low_i}, high_i:#{high_i}, #{$terms[i][0..@current_word.length - 1]}"
+		return false
 	end
+
+
+
 
 	def n
 		return nil if @r_index == 0 || @covered_ground.include?("#{@r_index - 1}#{@c_index}")

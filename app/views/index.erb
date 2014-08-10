@@ -1,6 +1,33 @@
 <div class="container">
-  <h1>index</h1>
-  <h2>hello thin world</h2>
+	<h1>Boggle Solver</h1>
+	<h2>Please type in your letters or click roll</h2>
+
+
+	<input type="text" id="board_string" name="board_string" value="<%= @board_string ? "@board_string" : "" %>" onkeyup="update_board_view()"><br>
+
+
+	<div = "board_viewer">
+		<table>
+			<thead>
+			</thead>
+			<tbody>
+				<tr>   <td id="td0"></td>  <td id="td1"></td>  <td id="td2"></td>  <td id="td3"></td>    </tr>
+				<tr>   <td id="td4"></td>  <td id="td5"></td>  <td id="td6"></td>  <td id="td7"></td>    </tr>
+				<tr>   <td id="td8"></td>  <td id="td9"></td>  <td id="td10"></td> <td id="td11"></td>   </tr>
+				<tr>   <td id="td12"></td> <td id="td13"></td> <td id="td14"></td> <td id="td15"></td>   </tr>
+			</tboad>
+		</table>
+	</div>
+
+
+	<h2>click below to evaluate this boggle board</h2>
+	<button type="button" onclick="evaluate_board()">Evaluate!</button></br>
+
+	<img id="evaluate_spinner" src="spinner.gif" height="42" width="42"></br>
+
+	<div id="results"></div>
+
+
 </div>
 <%=
 

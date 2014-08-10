@@ -1,0 +1,20 @@
+<%
+$end_time = Time.now + 60 # compute for 1 minute tops
+board = BoggleBoard.new(@board_string)
+board.evaluate_board
+%>
+<%= board.to_json %>
+
+
+
+
+
+
+<!-- <h2><%= "Your Words: #{board.found_words}" %></h2>
+<h2><%= " #{board.to_html}" %></h2>
+<h2><%= " #{board.to_flat_s}" %></h2>
+
+<h2><%= " #{board.total_score}" %></h2>
+
+
+</div> -->

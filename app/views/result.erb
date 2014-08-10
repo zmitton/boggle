@@ -3,7 +3,7 @@
 </br>
 
 <%
-$end_time = Time.now + 15 # compute for 5 minutes tops
+$end_time = Time.now + 45 # compute for 3 minutes tops
 board = BoggleBoard.new(@board_string)
 board.evaluate_board
 %>
@@ -13,7 +13,7 @@ board.evaluate_board
 <h2><%= " #{board.to_html}" %></h2>
 <h2><%= " #{board.to_flat_s}" %></h2>
 
-<h2><%= " #{board.total_score}" %></h2>
+<h2><%= " #{board.score}" %></h2>
 
 
 </div>
