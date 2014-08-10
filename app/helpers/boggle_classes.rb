@@ -1,6 +1,7 @@
 class BoggleBoard
 	attr_accessor :grid, :found_words, :r_index, :c_index, :score
 	def initialize (string = "4")
+		@board_string = string
 		@found_words = []
 		@covered_ground = []
 		@score = 0
@@ -107,6 +108,8 @@ class BoggleBoard
 				die.roll(r_index, c_index)
 			end
 		end
+		@board_string = ""
+		loop_board { |die| @board_string << die.top}
 	end
 
 	def loop_board
@@ -129,7 +132,6 @@ class BoggleBoard
 		total_score
 		@found_words.sort!.uniq!
 	end
-
 
 	def find_words #recursive
 		return nil if !binary_is_word_path? || ($end_time && Time.now > $end_time)
@@ -200,9 +202,6 @@ class BoggleBoard
 		return false
 	end
 
-
-
-
 	def n
 		return nil if @r_index == 0 || @covered_ground.include?("#{@r_index - 1}#{@c_index}")
 		@r_index -= 1
@@ -229,8 +228,6 @@ class BoggleBoard
 		@current_word = @current_word[0...-1]
 
 	end
-
-
 
 	def e
 		return nil if @c_index + 1 >= @grid.length || @covered_ground.include?("#{@r_index}#{@c_index + 1}")
@@ -304,10 +301,6 @@ class BoggleBoard
 		@covered_ground.pop
 		@current_word = @current_word[0...-1]	
 	end
-
-
-
-
 end
 
 class Die
