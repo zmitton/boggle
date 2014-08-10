@@ -1,0 +1,19 @@
+<div ="results">
+<h1>Results:</h1>
+</br>
+
+<%
+$end_time = Time.now + 15 # compute for 5 minutes tops
+board = BoggleBoard.new(@board_string)
+board.evaluate_board
+%>
+
+<h2><%= " #{board.found_words.length} words found" %></h2>
+<h2><%= "Your Words: #{board.found_words}" %></h2>
+<h2><%= " #{board.to_html}" %></h2>
+<h2><%= " #{board.to_flat_s}" %></h2>
+
+<h2><%= " #{board.total_score}" %></h2>
+
+
+</div>
